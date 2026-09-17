@@ -215,7 +215,7 @@ Rules:
 
 async function extractAppointmentDataFromImage(imageUrl) {
   const completion = await groq.chat.completions.create({
-    model: 'qwen/qwen3.6-27b',
+    model: 'qwen/qwen3.8-27b',
     messages: [
       {
         role: 'user',
