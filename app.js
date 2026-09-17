@@ -156,7 +156,7 @@ app.post('/generate-qr', async (req, res) => {
     return res.status(404).json({ success: false, message: 'Patient not found' });
   }
 
-  const qrPath = `localhost:3000/history/${cnic}`;
+  const qrPath = `https://clinics-beta-ten.vercel.app//history/${cnic}`;
 
   const qrBuffer = await QRCode.toBuffer(qrPath, {
     width: 400,
