@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doctor Panel — Alshifa Clinic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-ivory: #FBF8F5;
+    --white: #FFFFFF;
+    --red-deep: #6E1423;
+    --red-accent: #A31D2E;
+    --red-soft: #F4E3E1;
+    --charcoal: #201C1B;
+    --grey: #6B615E;
+    --hairline: rgba(32, 28, 27, 0.12);
+    --radius: 6px;
+    --radius-lg: 10px;
+    --green: #2F6B3F;
+    --shadow-sm: 0 1px 2px rgba(32,28,27,0.06);
+    --shadow-md: 0 4px 16px rgba(110,20,35,0.07), 0 1px 3px rgba(32,28,27,0.06);
+    --shadow-lg: 0 12px 32px rgba(110,20,35,0.10), 0 2px 6px rgba(32,28,27,0.05);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Work Sans', sans-serif;
+    color: var(--charcoal);
+    background:
+      radial-gradient(circle at 100% 0%, rgba(163,29,46,0.05), transparent 45%),
+      var(--bg-ivory);
+    display: grid;
+    grid-template-columns: 264px 1fr;
+    min-height: 100vh;
+  }
+
+  h1, h2, .brand-name { font-family: 'Fraunces', serif; font-weight: 600; }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar {
+    background: linear-gradient(180deg, var(--red-deep) 0%, #5A0F1C 100%);
+    color: var(--white);
+    padding: 32px 22px;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+
+  /* Clinic brand block */
+  .clinic-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.14);
+  }
+
+  .clinic-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18);
+  }
+
+  .clinic-logo svg { width: 20px; height: 20px; stroke: var(--white); }
+
+  .clinic-text .brand-name {
+    font-size: 1.12rem;
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+  }
+
+  .clinic-text .brand-subtitle {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: #E7CFCF;
+    margin-top: 3px;
+    font-weight: 600;
+  }
+
+  /* Doctor identity block */
+  .doctor-identity {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    background: rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    margin-bottom: 28px;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+  }
+
+  .doctor-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--red-accent);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+  }
+
+  .doctor-meta { min-width: 0; }
+
+  .doctor-meta .doctor-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--white);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .doctor-meta .doctor-role {
+    font-size: 0.72rem;
+    color: #E7CFCF;
+    margin-top: 1px;
+  }
+
+  /* Nav */
+  .sidebar nav { flex: 1; }
+  .sidebar nav .nav-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(231,207,207,0.65);
+    font-weight: 700;
+    padding: 0 14px;
+    margin-bottom: 10px;
+  }
+
+  .sidebar nav ul { list-style: none; }
+  .sidebar nav li { margin-bottom: 3px; }
+
+  .sidebar nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: var(--radius);
+    color: #E7CFCF;
+    text-decoration: none;
+    font-size: 0.89rem;
+    font-weight: 500;
+    transition: background 0.18s ease, color 0.18s ease;
+  }
+
+  .sidebar nav a svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    flex-shrink: 0;
+  }
+
+  .sidebar nav a.active {
+    background: rgba(255,255,255,0.16);
+    color: var(--white);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.10);
+    font-weight: 600;
+  }
+  .sidebar nav a:hover { color: var(--white); background: rgba(255,255,255,0.08); }
+
+  .sidebar .staff-tag {
+    padding-top: 18px;
+    border-top: 1px solid rgba(255,255,255,0.14);
+    font-size: 0.76rem;
+    color: #E7CFCF;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sidebar .staff-tag .status-dot {
+    width: 7px; height: 7px;
+    background: #6FCF97;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 3px rgba(111,207,151,0.18);
+  }
+
+  /* ---------- Main ---------- */
+  main { padding: 48px 56px 64px; max-width: 800px; }
+
+  .page-head { margin-bottom: 34px; }
+  .page-head .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--red-accent);
+    display: block;
+    margin-bottom: 10px;
+  }
+  .page-head h1 { font-size: 1.85rem; letter-spacing: -0.01em; }
+  .page-head p { color: var(--grey); font-size: 0.94rem; margin-top: 8px; line-height: 1.5; }
+
+  .search-card {
+    background: var(--white);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-lg);
+    padding: 26px 30px;
+    margin-bottom: 26px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .search-row { display: flex; gap: 12px; }
+
+  .search-row input {
+    flex: 1;
+    padding: 14px 16px;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    font-size: 0.95rem;
+    font-family: inherit;
+    outline: none;
+    background: var(--bg-ivory);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .search-row input:focus {
+    border-color: var(--red-accent);
+    box-shadow: 0 0 0 3px rgba(163,29,46,0.10);
+  }
+
+  .btn-primary {
+    background: var(--red-deep);
+    color: var(--white);
+    border: none;
+    padding: 14px 28px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: inherit;
+    border-radius: var(--radius);
+    cursor: pointer;
+    letter-spacing: 0.01em;
+    box-shadow: var(--shadow-sm);
+    transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+    white-space: nowrap;
+  }
+
+  .btn-primary:hover { background: var(--red-accent); box-shadow: var(--shadow-md); }
+  .btn-primary:active { transform: translateY(1px); }
+  .btn-primary:disabled { background: #C7B9BA; cursor: not-allowed; box-shadow: none; }
+
+  .patient-banner {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--red-soft);
+    border-left: 4px solid var(--red-deep);
+    border-radius: var(--radius);
+    padding: 18px 24px;
+    margin-bottom: 26px;
+    box-shadow: var(--shadow-sm);
+    animation: fadeSlide 0.25s ease;
+  }
+
+  .patient-banner.active { display: flex; }
+  .patient-banner .status-tag {
+    display: inline-block;
+    background: #E7F0E9;
+    color: var(--green);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+  .patient-banner h3 { font-size: 1.08rem; }
+  .patient-banner p { font-size: 0.85rem; color: var(--grey); margin-top: 2px; }
+
+  .not-found-note {
+    display: none;
+    background: #FDF1EF;
+    border-left: 4px solid var(--red-accent);
+    color: var(--red-deep);
+    padding: 16px 22px;
+    border-radius: var(--radius);
+    font-size: 0.88rem;
+    margin-bottom: 26px;
+    box-shadow: var(--shadow-sm);
+    animation: fadeSlide 0.25s ease;
+  }
+  .not-found-note.active { display: block; }
+
+  .error-note {
+    display: none;
+    background: #FDF1EF;
+    border-left: 4px solid var(--red-accent);
+    color: var(--red-deep);
+    padding: 16px 22px;
+    border-radius: var(--radius);
+    font-size: 0.88rem;
+    margin-bottom: 26px;
+    box-shadow: var(--shadow-sm);
+    animation: fadeSlide 0.25s ease;
+  }
+  .error-note.active { display: block; }
+
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .appointment-card {
+    background: var(--white);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    opacity: 0.45;
+    pointer-events: none;
+    transition: opacity 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .appointment-card.enabled { opacity: 1; pointer-events: auto; box-shadow: var(--shadow-md); }
+
+  .appointment-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 24px;
+    color: var(--red-deep);
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .appointment-card p.helper {
+    font-size: 0.86rem;
+    color: var(--grey);
+    margin-bottom: 22px;
+    line-height: 1.5;
+  }
+
+  .field { margin-bottom: 20px; }
+
+  .field label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--charcoal);
+    letter-spacing: 0.01em;
+  }
+
+  .field input {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.92rem;
+    background: var(--bg-ivory);
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .field input:focus {
+    border-color: var(--red-accent);
+    box-shadow: 0 0 0 3px rgba(163,29,46,0.10);
+  }
+
+  .field input:disabled {
+    background: #F1ECEA;
+    color: var(--grey);
+    cursor: not-allowed;
+  }
+
+  .upload-zone {
+    border: 2px dashed var(--hairline);
+    border-radius: var(--radius);
+    padding: 32px 20px;
+    text-align: center;
+    background: var(--bg-ivory);
+    margin-bottom: 8px;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .upload-zone.has-file {
+    border-color: var(--green);
+    background: #F3F8F4;
+  }
+
+  .upload-zone input[type="file"] {
+    display: block;
+    margin: 0 auto;
+    font-size: 0.88rem;
+  }
+
+  .upload-zone .upload-label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin-bottom: 10px;
+  }
+
+  .file-name {
+    font-size: 0.82rem;
+    color: var(--green);
+    font-weight: 600;
+    margin-top: 10px;
+    display: none;
+  }
+  .file-name.active { display: block; }
+
+  .toast {
+    display: none;
+    background: #E7F0E9;
+    color: var(--green);
+    border-left: 4px solid var(--green);
+    padding: 15px 18px;
+    border-radius: var(--radius);
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-top: 22px;
+    animation: fadeSlide 0.25s ease;
+  }
+  .toast.active { display: block; }
+
+  .toast.error {
+    background: var(--red-soft);
+    color: var(--red-deep);
+    border-left-color: var(--red-accent);
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px) {
+    body { grid-template-columns: 1fr; }
+
+    .sidebar {
+      position: static;
+      height: auto;
+      padding: 18px 20px;
+    }
+    .clinic-brand { margin-bottom: 16px; padding-bottom: 16px; }
+    .doctor-identity { margin-bottom: 16px; }
+    .sidebar nav .nav-label { display: none; }
+    .sidebar nav ul { display: flex; gap: 4px; flex-wrap: wrap; }
+    .sidebar nav li { margin-bottom: 0; }
+    .sidebar nav a { padding: 9px 12px; font-size: 0.84rem; }
+    .sidebar .staff-tag { border-top: none; padding-top: 12px; }
+
+    main { padding: 32px 24px 48px; }
+  }
+
+  @media (max-width: 640px) {
+    .sidebar nav ul { display: none; }
+    .search-row { flex-direction: column; }
+    .btn-primary { width: 100%; }
+    .page-head h1 { font-size: 1.5rem; }
+    .appointment-card { padding: 22px; }
+    .search-card { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+  <aside class="sidebar">
+
+    <div class="clinic-brand">
+      <div class="clinic-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 21s-6.5-4.35-9.5-8.5C.5 8.9 2.1 5 6 5c2 0 3.2 1 4 2 0.8-1 2-2 4-2 3.9 0 5.5 3.9 3.5 7.5C18.5 16.65 12 21 12 21z"/>
+          <path d="M9 12h1.5l1-2 1.5 4 1-2H16"/>
+        </svg>
+      </div>
+      <div class="clinic-text">
+        <div class="brand-name">Alshifa Clinic</div>
+        <div class="brand-subtitle">Doctor Panel</div>
+      </div>
+    </div>
+
+    <div class="doctor-identity">
+      <div class="doctor-avatar" id="doctorInitial"></div>
+      <div class="doctor-meta">
+        <div class="doctor-name"><%- username %></div>
+        <div class="doctor-role">Attending Physician</div>
+      </div>
+    </div>
+
+    <nav>
+      <div class="nav-label">Menu</div>
+      <ul>
+        <li>
+          <a href="#" class="active">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+            New Appointment
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2"/>
+              <path d="M16 2v4M8 2v4M3 10h18"/>
+            </svg>
+            My Appointments
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
+            Patient History
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            Settings
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="staff-tag">
+      <span class="status-dot"></span>
+      Signed in · Doctor Panel
+    </div>
+  </aside>
+
+  <main>
+    <div class="page-head">
+      <span class="eyebrow">Doctor Panel</span>
+      <h1>Upload Appointment Record</h1>
+      <p>Look up the patient by CNIC, then upload a photo of the prescription/note — the details are extracted automatically.</p>
+    </div>
+
+    <div class="search-card">
+      <div class="search-row">
+        <input type="text" id="cnicSearch" placeholder="Enter patient CNIC — e.g. 4210112345671">
+        <button class="btn-primary" id="searchBtn" onclick="searchPatient()">Find Patient</button>
+      </div>
+    </div>
+
+    <div class="patient-banner" id="patientBanner">
+      <div>
+        <span class="status-tag">Patient Found</span>
+        <h3 id="pbName"></h3>
+        <p id="pbMeta"></p>
+      </div>
+    </div>
+
+    <div class="not-found-note" id="notFoundNote">
+      No patient found with this CNIC. Ask the receptionist to register this patient first.
+    </div>
+
+    <div class="error-note" id="errorNote"></div>
+
+    <div class="appointment-card" id="appointmentCard">
+      <h3>Visit Record</h3>
+      <p class="helper">Upload a clear photo of the prescription or appointment note. It's read automatically and saved to the patient's history.</p>
+      <form id="appointmentForm">
+        <div class="field">
+          <label for="doctorName">Doctor</label>
+          <input type="text" id="doctorName" value=<%-username%> disabled>
+        </div>
+
+        <div class="field">
+          <label for="recordImage">Prescription / Appointment Image</label>
+          <div class="upload-zone" id="uploadZone">
+            <div class="upload-label">Choose or drop an image</div>
+            <input type="file" id="recordImage" name="image" accept="image/*" required>
+            <div class="file-name" id="fileName"></div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" id="saveBtn">Save Appointment Record</button>
+      </form>
+      <div class="toast" id="saveToast"></div>
+    </div>
+  </main>
+
+  <script>
+    const PATIENTS_API = '/api/patients';
+
+    let selectedPatientId = null;
+
+    const banner = document.getElementById('patientBanner');
+    const notFoundNote = document.getElementById('notFoundNote');
+    const errorNote = document.getElementById('errorNote');
+    const appointmentCard = document.getElementById('appointmentCard');
+    const searchBtn = document.getElementById('searchBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const saveToast = document.getElementById('saveToast');
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('recordImage');
+    const fileNameLabel = document.getElementById('fileName');
+
+    // Set doctor avatar initial from the username rendered by the server
+    (function setDoctorInitial() {
+      const nameEl = document.querySelector('.doctor-name');
+      const initialEl = document.getElementById('doctorInitial');
+      if (nameEl && initialEl) {
+        const name = nameEl.textContent.trim();
+        initialEl.textContent = name ? name.charAt(0).toUpperCase() : 'D';
+      }
+    })();
+
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files && fileInput.files[0]) {
+        fileNameLabel.textContent = fileInput.files[0].name;
+        fileNameLabel.classList.add('active');
+        uploadZone.classList.add('has-file');
+      } else {
+        fileNameLabel.classList.remove('active');
+        uploadZone.classList.remove('has-file');
+      }
+    });
+
+    function resetPanels() {
+      banner.classList.remove('active');
+      notFoundNote.classList.remove('active');
+      errorNote.classList.remove('active');
+      appointmentCard.classList.remove('enabled');
+      saveToast.classList.remove('active', 'error');
+      selectedPatientId = null;
+    }
+
+    async function searchPatient() {
+      const cnic = document.getElementById('cnicSearch').value.trim();
+      resetPanels();
+
+      if (!cnic) return;
+
+      searchBtn.disabled = true;
+      searchBtn.textContent = 'Searching...';
+
+      try {
+        const res = await fetch(`${PATIENTS_API}/${encodeURIComponent(cnic)}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include'
+        });
+
+        if (res.status === 404) {
+          notFoundNote.classList.add('active');
+          return;
+        }
+
+        if (!res.ok) {
+          throw new Error(`Server responded with ${res.status}`);
+        }
+
+        const data = await res.json();
+        const patient = data.patient || data;
+
+        document.getElementById('pbName').textContent = patient.name;
+        document.getElementById('pbMeta').textContent = "CNIC: " + patient.cnic + " · " + (patient.phone || '—');
+        banner.classList.add('active');
+        appointmentCard.classList.add('enabled');
+        selectedPatientId = patient._id || patient.id;
+
+      } catch (err) {
+        console.error('Search error:', err);
+        errorNote.textContent = 'Could not reach the server. Please try again.';
+        errorNote.classList.add('active');
+      } finally {
+        searchBtn.disabled = false;
+        searchBtn.textContent = 'Find Patient';
+      }
+    }
+
+    document.getElementById('appointmentForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      if (!selectedPatientId) return;
+
+      if (!fileInput.files || !fileInput.files[0]) {
+        saveToast.textContent = 'Please choose an image first.';
+        saveToast.classList.add('active', 'error');
+        return;
+      }
+
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Uploading & reading image...';
+      saveToast.classList.remove('active', 'error');
+
+      const formData = new FormData();
+      formData.append('image', fileInput.files[0]); // field name must match upload.single('image') on the backend
+
+      try {
+        const res = await fetch(`/add/record/${encodeURIComponent(selectedPatientId)}`, {
+          method: 'POST',
+          credentials: 'include',
+          body: formData // no Content-Type header — browser sets multipart boundary automatically
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.message || `Server responded with ${res.status}`);
+        }
+
+        saveToast.textContent = 'Appointment record saved to patient history.';
+        saveToast.classList.add('active');
+        this.reset();
+        fileNameLabel.classList.remove('active');
+        uploadZone.classList.remove('has-file');
+
+      } catch (err) {
+        console.error('Save error:', err);
+        saveToast.textContent = err.message || 'Failed to save appointment record.';
+        saveToast.classList.add('active', 'error');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save Appointment Record';
+      }
+    });
+  </script>
+
+</body>
+</html>

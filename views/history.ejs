@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Records — Alshifa Clinic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-ivory: #FBF8F5;
+    --white: #FFFFFF;
+    --red-deep: #6E1423;
+    --red-accent: #A31D2E;
+    --red-glow: #C9394B;
+    --red-soft: #F4E3E1;
+    --red-tint: #FDF4F3;
+    --charcoal: #201C1B;
+    --grey: #6B615E;
+    --grey-light: #9A908C;
+    --hairline: rgba(32, 28, 27, 0.10);
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --radius-sm: 8px;
+    --green: #1F6D3B;
+    --green-soft: #E5F2E9;
+    --amber: #8A5A12;
+    --amber-soft: #FBF0DE;
+    --shadow-card: 0 1px 2px rgba(32,28,27,0.04), 0 8px 24px -12px rgba(32,28,27,0.10);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Work Sans', sans-serif;
+    color: var(--charcoal);
+    background: var(--bg-ivory);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, .brand { font-family: 'Fraunces', serif; }
+
+  /* ---------- Header (light) ---------- */
+  .topbar {
+    background: rgb(92, 8, 8);
+    border-bottom: 1px solid var(--hairline);
+    padding: 28px 24px 40px;
+  }
+
+  .topbar-inner { max-width: 840px; margin: 0 auto; }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 2.05rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 26px;
+    letter-spacing: 0.01em;
+  }
+  .brand .mark {
+    width: 9px; height: 9px;
+    background: var(--red-accent);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px var(--red-soft);
+  }
+
+  .page-context {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: var(--grey-light);
+    margin-bottom: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .page-context .sep { opacity: 0.6; font-size: 0.7rem; }
+  .page-context .current { color: var(--red-accent); }
+
+  .patient-id-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--green-soft);
+    color: var(--green);
+    padding: 6px 12px;
+    border-radius: 30px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-bottom: 18px;
+  }
+  .patient-id-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+  }
+
+  /* patient identity tags */
+  .identity-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+
+  .id-tag {
+    background: var(--bg-ivory);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-md);
+    padding: 12px 18px;
+    min-width: 200px;
+  }
+
+  .id-tag .id-label {
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-weight: 700;
+    color: var(--grey-light);
+    margin-bottom: 4px;
+  }
+
+  .id-tag .id-value {
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--charcoal);
+  }
+
+  .id-tag.accent {
+    background: var(--red-tint);
+    border-color: rgba(163,29,46,0.14);
+  }
+  .id-tag.accent .id-value { color: var(--red-deep); letter-spacing: 0.02em; }
+
+  /* stat cards */
+  .patient-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 520px;
+  }
+
+  .stat-card {
+    background: var(--bg-ivory);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+  }
+
+  .stat-card .s-num {
+    font-family: 'Fraunces', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 4px;
+    color: var(--red-deep);
+  }
+
+  .stat-card .s-label {
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--grey);
+    font-weight: 600;
+  }
+
+  /* ---------- Content ---------- */
+  main { max-width: 840px; margin: 0 auto 70px; padding: 0 20px; }
+
+  /* purpose + guidance card, now living in main content */
+  .info-card {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: var(--white);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-lg);
+    padding: 20px 22px;
+    margin-top: 28px;
+    box-shadow: var(--shadow-card);
+  }
+
+  .info-card .info-icon {
+    flex-shrink: 0;
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--red-soft);
+    color: var(--red-deep);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    font-weight: 800;
+  }
+
+  .info-card .info-body p {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--grey);
+  }
+  .info-card .info-body p + p { margin-top: 10px; }
+  .info-card .info-body strong { color: var(--charcoal); }
+
+  .info-card.guidance {
+    background: var(--red-tint);
+    border-color: rgba(163,29,46,0.14);
+  }
+  .info-card.guidance .info-icon {
+    background: var(--red-deep);
+    color: var(--white);
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--red-accent);
+    margin: 40px 4px 20px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--hairline), transparent);
+  }
+
+  .empty-state {
+    background: var(--white);
+    border: 1.5px dashed var(--hairline);
+    border-radius: var(--radius-lg);
+    padding: 56px 24px;
+    text-align: center;
+    color: var(--grey);
+    font-size: 0.94rem;
+  }
+
+  /* ---------- Timeline ---------- */
+  .timeline { position: relative; padding-left: 30px; }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px; top: 4px; bottom: 4px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--red-accent), var(--hairline) 90%);
+  }
+
+  .visit-card {
+    position: relative;
+    background: var(--white);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-lg);
+    padding: 26px 28px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .visit-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(32,28,27,0.05), 0 16px 32px -14px rgba(32,28,27,0.16);
+  }
+
+  .visit-dot {
+    position: absolute;
+    left: -30px; top: 30px;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--red-glow), var(--red-deep));
+    border: 3px solid var(--bg-ivory);
+    box-shadow: 0 0 0 3px rgba(163,29,46,0.12);
+  }
+
+  .visit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .visit-date {
+    font-family: 'Fraunces', serif;
+    font-size: 1.18rem;
+    font-weight: 700;
+    color: var(--red-deep);
+    letter-spacing: -0.01em;
+  }
+
+  .visit-doctor {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    color: var(--grey);
+    margin-top: 5px;
+    font-weight: 500;
+  }
+  .visit-doctor .doc-avatar {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--red-soft);
+    color: var(--red-deep);
+    font-size: 0.6rem;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .visit-badge {
+    background: var(--green-soft);
+    color: var(--green);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .visit-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+  }
+
+  .visit-fields { display: flex; flex-direction: column; gap: 16px; }
+
+  .visit-field { display: flex; gap: 14px; }
+
+  .f-icon {
+    flex-shrink: 0;
+    width: 34px; height: 34px;
+    border-radius: 9px;
+    background: var(--bg-ivory);
+    border: 1px solid var(--hairline);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+
+  .f-body { flex: 1; min-width: 0; }
+
+  .f-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 700;
+    color: var(--grey-light);
+    margin-bottom: 5px;
+  }
+
+  .f-value {
+    font-size: 0.93rem;
+    line-height: 1.55;
+    color: var(--charcoal);
+  }
+
+  .improvement-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    padding: 5px 11px;
+    border-radius: 20px;
+    margin-top: 8px;
+  }
+
+  .improvement-tag.positive { background: var(--green-soft); color: var(--green); }
+  .improvement-tag.neutral  { background: var(--amber-soft); color: var(--amber); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 640px) {
+    .topbar { padding: 22px 16px 30px; }
+    .identity-row { flex-direction: column; gap: 10px; }
+    .id-tag { min-width: 100%; }
+    .patient-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 100%; }
+    .stat-card { padding: 10px 10px; }
+    .stat-card .s-num { font-size: 1.15rem; }
+    main { padding: 0 14px; }
+    .info-card { flex-direction: column; padding: 18px; }
+    .visit-card { padding: 20px 18px; }
+    .timeline { padding-left: 24px; }
+    .visit-dot { left: -24px; width: 15px; height: 15px; }
+    .visit-header { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="mark"></span> Alshifa Clinic
+    </div>
+
+    <div class="page-context">
+      <span>Patient Portal</span>
+      <span class="sep">/</span>
+      <span class="current">My Medical Records</span>
+    </div>
+
+    <div class="patient-id-badge">Verified Patient Record</div>
+
+    <div class="identity-row">
+      <div class="id-tag">
+        <div class="id-label">Patient Name</div>
+        <div class="id-value"><%= patient.name %></div>
+      </div>
+      <div class="id-tag accent">
+        <div class="id-label">CNIC</div>
+        <div class="id-value"><%= patient.cnic %></div>
+      </div>
+    </div>
+
+    <div class="patient-stats">
+      <div class="stat-card">
+        <div class="s-num"><%= patient.records.length %></div>
+        <div class="s-label">Total Visits</div>
+      </div>
+      <div class="stat-card">
+        <div class="s-num" id="lastVisitChip">—</div>
+        <div class="s-label">Last Visit</div>
+      </div>
+      <div class="stat-card">
+        <div class="s-num" id="activeDoctorChip">—</div>
+        <div class="s-label">Latest Doctor</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="info-card">
+    <div class="info-icon">i</div>
+    <div class="info-body">
+      <p><strong>What is this page?</strong> This is your personal visit history — every time a doctor at Alshifa Clinic sees you, what was diagnosed and prescribed is recorded here automatically.</p>
+      <p>You can check back anytime to review past prescriptions or track how your condition has progressed over time.</p>
+    </div>
+  </div>
+
+  <% if (patient.records && patient.records.length > 0) { %>
+    <div class="info-card guidance">
+      <div class="info-icon">✓</div>
+      <div class="info-body">
+        <p><strong>How to read your records below:</strong> Each card is one clinic visit, newest first. A green tag means your doctor noted improvement — amber means it's worth a follow-up visit.</p>
+        <p>Always check "Prescribed Medicines" before refilling, to make sure you're taking your latest dose.</p>
+      </div>
+    </div>
+  <% } %>
+
+  <div class="section-label">Visit History</div>
+
+  <% if (!patient.records || patient.records.length === 0) { %>
+    <div class="empty-state">
+      No visit records yet. Your history will appear here after your first appointment.
+    </div>
+  <% } else { %>
+    <div class="timeline" id="timeline">
+      <% patient.records
+           .slice()
+           .sort((a, b) => new Date(b.visitDate) - new Date(a.visitDate))
+           .forEach(function(visit) { %>
+        <div class="visit-card">
+          <div class="visit-dot"></div>
+          <div class="visit-header">
+            <div>
+              <div class="visit-date" data-date="<%= visit.visitDate %>"><%= visit.visitDate %></div>
+              <div class="visit-doctor">
+                <span class="doc-avatar">Dr</span> <%= visit.doctor %>
+              </div>
+            </div>
+            <span class="visit-badge">Visit Recorded</span>
+          </div>
+
+          <div class="visit-fields">
+            <div class="visit-field">
+              <div class="f-icon">🩺</div>
+              <div class="f-body">
+                <div class="f-label">Diagnosis / Details</div>
+                <div class="f-value"><%= visit.details %></div>
+              </div>
+            </div>
+
+            <div class="visit-field">
+              <div class="f-icon">💊</div>
+              <div class="f-body">
+                <div class="f-label">Prescribed Medicines</div>
+                <div class="f-value"><%= visit.medicines %></div>
+              </div>
+            </div>
+
+            <div class="visit-field">
+              <div class="f-icon">📈</div>
+              <div class="f-body">
+                <div class="f-label">Improvement / Follow-up</div>
+                <div class="f-value improvement-value"><%= visit.improvement %></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</main>
+
+<script>
+  function formatDate(iso) {
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  document.querySelectorAll('.visit-date').forEach(el => {
+    const raw = el.getAttribute('data-date');
+    if (raw) el.textContent = formatDate(raw);
+  });
+
+  const firstCard = document.querySelector('.visit-card');
+  if (firstCard) {
+    const lastVisitChip = document.getElementById('lastVisitChip');
+    const dateAttr = firstCard.querySelector('.visit-date')?.getAttribute('data-date');
+    if (lastVisitChip && dateAttr) {
+      const d = new Date(dateAttr);
+      lastVisitChip.textContent = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    }
+
+    const activeDoctorChip = document.getElementById('activeDoctorChip');
+    const docText = firstCard.querySelector('.visit-doctor')?.textContent?.replace('Dr', '').trim();
+    if (activeDoctorChip && docText) {
+      activeDoctorChip.textContent = docText.length > 10 ? docText.slice(0, 9) + '…' : docText;
+    }
+  }
+
+  document.querySelectorAll('.improvement-value').forEach(el => {
+    const text = el.textContent.toLowerCase();
+    const positive = /(improv|better|recover|resolved|good)/.test(text) && !/not any|no improvement|worse|declin/.test(text);
+    const tag = document.createElement('span');
+    tag.className = 'improvement-tag ' + (positive ? 'positive' : 'neutral');
+    tag.textContent = positive ? '↑ Improving' : '● Needs follow-up';
+    el.after(tag);
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Staff Sign Up — Alshifa Clinic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-ivory: #FBF8F5;
+    --white: #FFFFFF;
+    --red-deep: #6E1423;
+    --red-accent: #A31D2E;
+    --charcoal: #201C1B;
+    --grey: #6B615E;
+    --hairline: rgba(32, 28, 27, 0.14);
+    --radius: 3px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Work Sans', sans-serif;
+    color: var(--charcoal);
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  h1, .brand { font-family: 'Fraunces', serif; font-weight: 600; }
+
+  .panel {
+    position: relative;
+    background:
+      linear-gradient(160deg, rgba(30,10,14,0.9) 10%, rgba(110,20,35,0.55) 60%, rgba(110,20,35,0.25) 100%),
+      url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+    color: var(--white);
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .panel .brand { display: flex; align-items: center; gap: 10px; font-size: 1.4rem; }
+  .panel .brand .mark { width: 9px; height: 9px; background: var(--white); border-radius: 50%; }
+
+  .panel .quote { max-width: 380px; }
+  .panel .quote h2 { font-family: 'Fraunces', serif; font-size: 1.8rem; line-height: 1.3; margin-bottom: 14px; }
+  .panel .quote p { color: #E7CFCF; font-size: 0.92rem; }
+
+  .form-panel {
+    background: var(--bg-ivory);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+    overflow-y: auto;
+  }
+
+  .form-box { width: 100%; max-width: 400px; }
+
+  .form-box .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--red-accent);
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  .form-box h1 { font-size: 1.85rem; margin-bottom: 8px; }
+  .form-box .sub { color: var(--grey); font-size: 0.92rem; margin-bottom: 28px; }
+
+  /* Role toggle */
+  .role-toggle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 26px;
+  }
+
+  .role-option {
+    position: relative;
+  }
+
+  .role-option input {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    margin: 0;
+  }
+
+  .role-option label {
+    display: block;
+    text-align: center;
+    padding: 14px 10px;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    background: var(--white);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--grey);
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .role-option input:checked + label {
+    border-color: var(--red-deep);
+    background: var(--red-deep);
+    color: var(--white);
+  }
+
+  .field { margin-bottom: 18px; }
+
+  .field label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--charcoal);
+  }
+
+  .field input, .field select {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.94rem;
+    background: var(--white);
+    color: var(--charcoal);
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  .field input:focus, .field select:focus { border-color: var(--red-accent); }
+  .field input::placeholder { color: #B0A6A4; }
+
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* Only shown when Doctor role is selected */
+  .doctor-only { display: none; }
+  .doctor-only.active { display: block; }
+
+  .btn-primary {
+    width: 100%;
+    background: var(--red-deep);
+    color: var(--white);
+    border: none;
+    padding: 14px;
+    font-size: 0.94rem;
+    font-weight: 600;
+    border-radius: var(--radius);
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.2s ease;
+  }
+
+  .btn-primary:hover { background: var(--red-accent); }
+
+  .switch-link {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--grey);
+    margin-top: 24px;
+  }
+
+  .switch-link a { color: var(--red-deep); font-weight: 600; text-decoration: none; }
+  .switch-link a:hover { color: var(--red-accent); }
+
+  .note {
+    background: #F4E3E1;
+    border-left: 3px solid var(--red-deep);
+    padding: 12px 14px;
+    font-size: 0.8rem;
+    color: var(--red-deep);
+    border-radius: var(--radius);
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 860px) {
+    body { grid-template-columns: 1fr; }
+    .panel { display: none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="panel">
+    
+    <div class="quote">
+      <h2>Staff access, built around real clinic roles.</h2>
+      <p>Doctors and receptionists each get an account suited to what they do — patient records stay attached to the clinic, not a login.</p>
+    </div>
+  </div>
+
+  <div class="form-panel">
+    <form action="/users/signup" method="post">
+    <div class="form-box">
+      <span class="eyebrow">Staff Registration</span>
+      <h1>Create a staff account</h1>
+      <p class="sub">This account is for clinic staff only — patient records are added by staff, not self-registered.</p>
+
+      <form id="signupForm">
+        <div class="role-toggle">
+          <div class="role-option">
+            <input type="radio" id="roleDoctor" name="role" value="doctor" checked>
+            <label for="roleDoctor">Doctor</label>
+          </div>
+          <div class="role-option">
+            <input type="radio" id="roleReceptionist" name="role" value="receptionist">
+            <label for="roleReceptionist">Receptionist</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="name">Username</label>
+          <input type="text" id="name" name="Username" placeholder="Enter username" required>
+        </div>
+
+
+        
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@clinic.pk" required>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Create a password" required>
+        </div>
+
+        <button type="submit" class="btn-primary">Create Staff Account</button>
+      </form>
+
+      <p class="switch-link">Already have an account? <a href="/login">Log in</a></p>
+    </div>
+    </form>
+  </div>
+
+  <script>
+    const roleInputs = document.querySelectorAll('input[name="role"]');
+    const specialtyField = document.getElementById('specialtyField');
+
+    roleInputs.forEach(input => {
+      input.addEventListener('change', () => {
+        specialtyField.classList.toggle('active', input.value === 'doctor' && input.checked);
+      });
+    });
+  </script>
+
+</body>
+</html>
