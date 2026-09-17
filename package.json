@@ -1,0 +1,42 @@
+{
+    "engines": {
+  
+      
+    "node": "20.x"
+  
+    },
+  "name": "clinics",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/callmeeman45-dotcom/Clinics.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/callmeeman45-dotcom/Clinics/issues"
+  },
+  "homepage": "https://github.com/callmeeman45-dotcom/Clinics#readme",
+  "dependencies": {
+    "cloudinary": "^2.11.0",
+    "connect-mongo": "^6.0.0",
+    "dotenv": "^17.4.2",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "groq-sdk": "^1.6.0",
+    "mongoose": "^9.10.1",
+    "multer": "^2.4.0",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^9.1.0",
+    "qrcode": "^1.5.4"
+  }
+}
